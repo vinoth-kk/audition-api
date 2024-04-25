@@ -4,4 +4,8 @@ out/
 /conf/
 classes/
 target/
+/target
+/.settings
+/.classpath
+/.project
 
