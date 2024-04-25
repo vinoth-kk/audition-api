@@ -32,6 +32,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class AuditionIntegrationClient {
 
     private static final String AUDITION_CLIENT = "auditionIntegrationClient";
+    public static final String RESOURCE_NOT_FOUND_FOR_THE_GIVEN_SEARCH_CRITERIA = "Resource Not Found for the given search criteria";
 
     @Value("${management.endpoints.audition.posts}")
     private transient String postsEndpoint;
@@ -68,15 +69,11 @@ public class AuditionIntegrationClient {
 
             logger.info(LOG, "getPosts(): URL to fetch the resource:" + uriComponentsBuilder.toUriString());
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("accept", "application/json");
-            HttpEntity requestEntity = new HttpEntity<>(null, headers);
-
             final ResponseEntity<List<AuditionPost>> auditionPostList =
                     restTemplate.exchange(uriComponentsBuilder.toUriString(), HttpMethod.GET,
-                            requestEntity, new ParameterizedTypeReference<>(){});
-            if (auditionPostList.getBody().isEmpty()) {
-                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Resource Not Found for the given search criteria");
+                        getHttpEntityWithHeaders(), new ParameterizedTypeReference<>(){});
+            if (auditionPostList.getBody() != null && auditionPostList.getBody().isEmpty()) {
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, RESOURCE_NOT_FOUND_FOR_THE_GIVEN_SEARCH_CRITERIA);
             }
             logger.info(LOG, "getPosts(): Response successfully received");
 
@@ -99,10 +96,15 @@ public class AuditionIntegrationClient {
         try {
             logger.info(LOG, "getPostById(): Request Received");
             logger.info(LOG, "getPostById(): URL to fetch the resource:" + postsEndpoint + "/" + id);
-            final AuditionPost auditionPost = restTemplate.getForObject(postsEndpoint + "/" + id,
-                    AuditionPost.class);
+
+            final ResponseEntity<AuditionPost> auditionPost =
+                restTemplate.exchange(postsEndpoint + "/" + id, HttpMethod.GET, getHttpEntityWithHeaders(), AuditionPost.class);
+            if (auditionPost.getBody() == null) {
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, RESOURCE_NOT_FOUND_FOR_THE_GIVEN_SEARCH_CRITERIA);
+            }
             logger.info(LOG, "getPostById(): Response successfully received");
-            return auditionPost;
+
+            return auditionPost.getBody();
         } catch (final HttpClientErrorException httpClientErrorException) {
             if (httpClientErrorException.getStatusCode() == HttpStatus.NOT_FOUND) {
                 logger.error(LOG, "getPostById(): " + HttpStatus.NOT_FOUND + " " + httpClientErrorException.getMessage());
@@ -130,14 +132,10 @@ public class AuditionIntegrationClient {
             URI uri = UriComponentsBuilder.fromUriString(postCommentsEndpoint).buildAndExpand(params).toUri();
             logger.info(LOG, "getComments(): URL to fetch the resource:" + uri.toString());
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("accept", "application/json");
-            HttpEntity requestEntity = new HttpEntity<>(null, headers);
-
             final ResponseEntity<List<AuditionComments>> auditionCommentsList =
-                    restTemplate.exchange(uri, HttpMethod.GET, requestEntity, new ParameterizedTypeReference<>(){});
+                    restTemplate.exchange(uri, HttpMethod.GET, getHttpEntityWithHeaders(), new ParameterizedTypeReference<>(){});
             if (auditionCommentsList.getBody() != null && auditionCommentsList.getBody().isEmpty()) {
-                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Resource Not Found for the given search criteria");
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, RESOURCE_NOT_FOUND_FOR_THE_GIVEN_SEARCH_CRITERIA);
             }
             logger.info(LOG, "getComments(): Response successfully received");
 
@@ -171,15 +169,12 @@ public class AuditionIntegrationClient {
 
             logger.info(LOG, "getCommentsByPostId(): URL to fetch the resource:" + uriComponentsBuilder.toUriString());
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("accept", "application/json");
-            HttpEntity requestEntity = new HttpEntity<>(null, headers);
-
             final ResponseEntity<List<AuditionComments>> auditionCommentsList =
                     restTemplate.exchange(uriComponentsBuilder.toUriString(), HttpMethod.GET,
-                            requestEntity, new ParameterizedTypeReference<>(){});
+                        getHttpEntityWithHeaders(), new ParameterizedTypeReference<>(){});
             if (auditionCommentsList.getBody() != null && auditionCommentsList.getBody().isEmpty()) {
-                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Resource Not Found for the given search criteria");
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND,
+                    RESOURCE_NOT_FOUND_FOR_THE_GIVEN_SEARCH_CRITERIA);
             }
             logger.info(LOG, "getCommentsByPostId(): Response successfully received");
 
@@ -195,5 +190,11 @@ public class AuditionIntegrationClient {
                 throw new SystemException("getCommentsByPostId() exception:" + httpClientErrorException.getMessage());
             }
         }
+    }
+
+    private HttpEntity getHttpEntityWithHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("accept", "application/json");
+        return new HttpEntity<>(null, headers);
     }
 }
