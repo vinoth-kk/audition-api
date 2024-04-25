@@ -7,7 +7,6 @@ plugins {
     id 'jacoco'
     id "com.github.spotbugs" version "5.0.14"
     id "io.freefair.lombok" version "8.0.1"
-    // TODO Enable checkstyle and PMD. Fix all the relevant issues.
     id "checkstyle"
     id "pmd"
 }
@@ -17,9 +16,6 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 targetCompatibility = '17'
 
-
-// TODO allow for code-analysis.gradle to be applied for code analysis.
-// apply from: 'config/code-analysis.gradle'
 
 configurations {
     compileOnly {
@@ -49,8 +45,10 @@ dependencies {
     implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "io.micrometer:context-propagation"
     implementation "org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j"
+    implementation "org.springframework.cloud:spring-cloud-starter-config"
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
     implementation "com.github.spotbugs:spotbugs-annotations:4.7.3"
+    implementation "io.opentelemetry:opentelemetry-api-trace:0.13.1"
 
     developmentOnly "org.springframework.boot:spring-boot-devtools"
     runtimeOnly "io.micrometer:micrometer-registry-prometheus"

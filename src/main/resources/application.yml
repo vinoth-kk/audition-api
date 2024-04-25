@@ -28,8 +28,9 @@ management:
       comments: https://jsonplaceholder.typicode.com/comments
       postComments: https://jsonplaceholder.typicode.com/posts/{postId}/comments
 logging:
-  level:
-    root: INFO
+  pattern:
+    level: "%5p [${spring.application.name:},trace:%X{traceId:-},span:%X{spanId:-}]"
+
 resilience4j:
   retry:
     instances:
