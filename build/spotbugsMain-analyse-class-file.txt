@@ -1,0 +1,15 @@
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/configuration/ResponseHeaderInjector.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/configuration/LoggingInterceptor.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/configuration/WebServiceConfiguration.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/web/AuditionController.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/web/advice/ExceptionControllerAdvice.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/integration/AuditionIntegrationClient.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/integration/AuditionIntegrationClient$3.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/integration/AuditionIntegrationClient$1.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/integration/AuditionIntegrationClient$2.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/AuditionApplication.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/common/exception/SystemException.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/common/logging/AuditionLogger.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/model/AuditionPost.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/model/AuditionComments.class
+/Users/v4/Documents/Code/Vino/audition-api/build/classes/java/main/com/audition/service/AuditionService.class
