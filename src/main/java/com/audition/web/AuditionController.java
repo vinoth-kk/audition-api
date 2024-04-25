@@ -9,9 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuditionController {
@@ -20,7 +25,8 @@ public class AuditionController {
     private transient AuditionService auditionService;
 
     @RequestMapping(value = "/posts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody List<AuditionPost> getPosts(@RequestParam @Validated final MultiValueMap<String, String> queryParam) {
+    public @ResponseBody
+    List<AuditionPost> getPosts(@RequestParam @Validated final MultiValueMap<String, String> queryParam) {
 
         String id = StringUtils.isNotEmpty(queryParam.getFirst("id")) ? queryParam.getFirst("id") : null;
         String userId = StringUtils.isNotEmpty(queryParam.getFirst("userId")) ? queryParam.getFirst("userId") : null;

@@ -2,32 +2,30 @@ package com.audition.integration;
 
 import com.audition.common.exception.SystemException;
 import com.audition.common.logging.AuditionLogger;
-import com.audition.configuration.LoggingInterceptor;
 import com.audition.model.AuditionComments;
 import com.audition.model.AuditionPost;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.lang.reflect.ParameterizedType;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Component
 @SuppressFBWarnings
@@ -90,7 +88,7 @@ public class AuditionIntegrationClient {
                 throw new SystemException("Cannot find any posts. Resource Not Found", 404);
             } else {
                 logger.error(LOG, "getPosts() downstream error stack: " + httpClientErrorException.getStackTrace());
-                throw new SystemException("getPosts() exception:" + httpClientErrorException.getMessage() );
+                throw new SystemException("getPosts() exception:" + httpClientErrorException.getMessage());
             }
         }
     }
@@ -113,7 +111,7 @@ public class AuditionIntegrationClient {
             } else {
                 // TODO Find a better way to handle the exception so that the original error message is not lost. Feel free to change this function.
                 logger.error(LOG, "getPostById() downstream error stack: " + httpClientErrorException.getStackTrace());
-                throw new SystemException("getPostById() exception:" + httpClientErrorException.getMessage() );
+                throw new SystemException("getPostById() exception:" + httpClientErrorException.getMessage());
             }
         }
     }
@@ -138,7 +136,7 @@ public class AuditionIntegrationClient {
 
             final ResponseEntity<List<AuditionComments>> auditionCommentsList =
                     restTemplate.exchange(uri, HttpMethod.GET, requestEntity, new ParameterizedTypeReference<>(){});
-            if (auditionCommentsList.getBody() !=null && auditionCommentsList.getBody().isEmpty()) {
+            if (auditionCommentsList.getBody() != null && auditionCommentsList.getBody().isEmpty()) {
                 throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Resource Not Found for the given search criteria");
             }
             logger.info(LOG, "getComments(): Response successfully received");
@@ -151,7 +149,7 @@ public class AuditionIntegrationClient {
                 throw new SystemException("Cannot find any comments. Resource Not Found", 404);
             } else {
                 logger.error(LOG, "getComments() downstream error stack: " + httpClientErrorException.getStackTrace());
-                throw new SystemException("getComments() exception:" + httpClientErrorException.getMessage() );
+                throw new SystemException("getComments() exception:" + httpClientErrorException.getMessage());
             }
         }
     }
@@ -194,7 +192,7 @@ public class AuditionIntegrationClient {
             } else {
                 // TODO Find a better way to handle the exception so that the original error message is not lost. Feel free to change this function.
                 logger.error(LOG, "getCommentsByPostId() downstream error stack: " + httpClientErrorException.getStackTrace());
-                throw new SystemException("getCommentsByPostId() exception:" + httpClientErrorException.getMessage() );
+                throw new SystemException("getCommentsByPostId() exception:" + httpClientErrorException.getMessage());
             }
         }
     }
