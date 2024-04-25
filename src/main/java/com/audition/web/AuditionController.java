@@ -1,20 +1,13 @@
 package com.audition.web;
 
 import com.audition.configuration.ResponseHeaderInjector;
-import com.audition.model.AuditionComments;
-import com.audition.model.AuditionPost;
 import com.audition.service.AuditionService;
-import io.opentelemetry.api.trace.Span;
-import jakarta.websocket.server.PathParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
-
-import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

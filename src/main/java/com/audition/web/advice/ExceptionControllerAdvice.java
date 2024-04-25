@@ -1,5 +1,8 @@
 package com.audition.web.advice;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED;
+
 import com.audition.common.exception.SystemException;
 import com.audition.common.logging.AuditionLogger;
 import io.micrometer.common.util.StringUtils;
@@ -13,9 +16,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED;
 
 
 @ControllerAdvice

@@ -1,6 +1,8 @@
 package com.audition.configuration;
 
 import com.audition.common.logging.AuditionLogger;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,6 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
 
 @Component
 public class LoggingInterceptor implements ClientHttpRequestInterceptor {
