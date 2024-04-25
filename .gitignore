@@ -9,3 +9,6 @@ target/
 /.classpath
 /.project
 
+/build/
+/.idea/
+/.gradle/
