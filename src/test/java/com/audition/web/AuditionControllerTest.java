@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import com.audition.common.logging.AuditionLogger;
 import com.audition.configuration.ResponseHeaderInjector;
 import com.audition.model.AuditionComments;
 import com.audition.model.AuditionPost;
@@ -31,8 +32,13 @@ public class AuditionControllerTest {
 
     @InjectMocks
     private transient AuditionController auditionController;
+
     @Mock
     private transient AuditionService auditionService;
+
+    @Mock
+    private transient AuditionLogger logger;
+
     @Mock
     private transient ResponseHeaderInjector responseHeaderInjector;
 
