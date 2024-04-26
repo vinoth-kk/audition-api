@@ -34,7 +34,7 @@ public class AuditionController {
     }
 
     @RequestMapping(value = "/posts/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity getPosts(@PathVariable("id") @Validated final String postId) {
+    public @ResponseBody ResponseEntity getPostsById(@PathVariable("id") @Validated final String postId) {
         return ResponseEntity.ok().headers(responseHeaderInjector.getTraceHeaders()).body(auditionService.getPostById(postId));
 
     }
