@@ -5,7 +5,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import com.audition.configuration.ResponseHeaderInjector;
-import com.audition.integration.AuditionIntegrationClient;
 import com.audition.model.AuditionComments;
 import com.audition.model.AuditionPost;
 import com.audition.service.AuditionService;
