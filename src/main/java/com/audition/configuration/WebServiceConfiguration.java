@@ -24,7 +24,6 @@ public class WebServiceConfiguration implements WebMvcConfigurer {
 
     @Bean
     public ObjectMapper objectMapper() {
-        // TODO configure Jackson Object mapper that
         //  1. allows for date format as yyyy-MM-dd
         //  2. Does not fail on unknown properties
         //  3. maps to camelCase
@@ -46,9 +45,7 @@ public class WebServiceConfiguration implements WebMvcConfigurer {
     public RestTemplate restTemplate(LoggingInterceptor loggingInterceptor) {
         final RestTemplate restTemplate = new RestTemplate(
                 new BufferingClientHttpRequestFactory(createClientFactory()));
-        // TODO use object mapper
         restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
-        // TODO create a logging interceptor that logs request/response for rest template calls.
         restTemplate.setInterceptors(Collections.singletonList(loggingInterceptor));
         return restTemplate;
     }
