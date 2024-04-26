@@ -27,6 +27,20 @@ repositories {
     mavenCentral()
 }
 
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "com/audition/common/*",
+                    "com/audition/model/*",
+                    "com/audition/web/advice/*",
+                    "com/audition/configuration/*"
+            ])
+        }))
+    }
+}
 ext {
     set('springCloudVersion', "2022.0.1")
     set('logbackVersion', "1.4.5")
